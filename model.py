@@ -12,7 +12,7 @@ class Game(db.Model):
     description = db.Column(db.String(100))
 
 
-def connect_to_db(app, db_uri="postgresql:///games"):
+def connect_to_db(app, db_uri="postgresql:///testdb"):
     app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     db.app = app
     db.init_app(app)
@@ -21,7 +21,11 @@ def connect_to_db(app, db_uri="postgresql:///games"):
 def example_data():
     """Create example data for the test database."""
     # FIXME: write a function that creates a game and adds it to the database.
-    print("FIXME")
+    monopoly = Game(game_id = 1, name = 'Monopoly', description = "Make some fake money")
+    uno = Game(game_id = 2, name = 'Uno', description= "Finish first")
+
+    db.session.add_all([monopoly, uno])
+    db.session.commit()
 
 
 if __name__ == '__main__':
